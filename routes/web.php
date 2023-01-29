@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Apps\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    Auth::logout();
-    return view('welcome');
+    return Inertia::render("Auth/Login");
+})->middleware("guest");
+
+Route::group(["middleware" => "auth"], function() {
+    Route::get("/apps/dashboard", DashboardController::class)->name("apps.dashboard");
 });
