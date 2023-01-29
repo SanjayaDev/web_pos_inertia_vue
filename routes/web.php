@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Apps\DashboardController;
 use App\Http\Controllers\Apps\PermissionController;
+use App\Http\Controllers\Apps\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,4 +27,8 @@ Route::group(["middleware" => "auth"], function() {
 
     Route::get("/apps/permissions", PermissionController::class)->name("apps.permissions.index")
     ->middleware("permission:permissions.index");
+
+    Route::resource("/apps/roles", RoleController::class, ["as" => "apps"])
+    ->except(["show"])
+    ->middleware("permission:roles.index|roles.create|roles.edit|roles.delete");
 });
