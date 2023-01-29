@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Apps\DashboardController;
+use App\Http\Controllers\Apps\PermissionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,4 +23,7 @@ Route::get('/', function () {
 
 Route::group(["middleware" => "auth"], function() {
     Route::get("/apps/dashboard", DashboardController::class)->name("apps.dashboard");
+
+    Route::get("/apps/permissions", PermissionController::class)->name("apps.permissions.index")
+    ->middleware("permission:permissions.index");
 });
