@@ -3,6 +3,7 @@
 use App\Http\Controllers\Apps\DashboardController;
 use App\Http\Controllers\Apps\PermissionController;
 use App\Http\Controllers\Apps\RoleController;
+use App\Http\Controllers\Apps\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,4 +32,8 @@ Route::group(["middleware" => "auth"], function() {
     Route::resource("/apps/roles", RoleController::class, ["as" => "apps"])
     ->except(["show"])
     ->middleware("permission:roles.index|roles.create|roles.edit|roles.delete");
+
+    Route::resource("apps/users", UserController::class, ["as" => "apps"])
+    ->except(["show"])
+    ->middleware("permission:users.index|users.create|users.edit|users.delete");
 });
