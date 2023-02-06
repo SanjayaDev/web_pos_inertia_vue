@@ -94,7 +94,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <Link
-                                                        href="#"
+                                                        :href="`/apps/roles/${role.id}/edit`"
                                                         v-if="
                                                             hasAnyPermission([
                                                                 'roles.edit',
@@ -112,6 +112,7 @@
                                                                 'roles.delete',
                                                             ])
                                                         "
+                                                        @click.prevent="destroy(role.id)"
                                                         class="btn btn-danger btn-sm"
                                                     >
                                                         <i
@@ -143,6 +144,7 @@ import Pagination from '../../../Components/Pagination.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { ref } from "@vue/reactivity";
 import { Inertia } from "@inertiajs/inertia";
+import Swal from "sweetalert2";
 
 const props = defineProps({
   roles: Object
@@ -153,5 +155,31 @@ const handleSearch = () => {
   Inertia.get("/apps/roles", {
     q: search.value,
   });
+}
+
+const destroy = (id) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    })
+    .then(result => {
+        if (result.isConfirmed) {
+
+            Inertia.delete(`/apps/roles/${id}`);
+
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Role deleted successfully.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        }
+    });
 }
 </script>
