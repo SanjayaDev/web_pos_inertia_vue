@@ -31,7 +31,7 @@ class Category extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => !empty($value) ? asset('/storage/categories/' . $value) : NULL,
+            get: fn ($value) => !empty($value) ? asset('images/categories/' . $value) : NULL,
         );
     }
 }

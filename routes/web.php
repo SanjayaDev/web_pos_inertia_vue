@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Apps\CategoryController;
 use App\Http\Controllers\Apps\DashboardController;
 use App\Http\Controllers\Apps\PermissionController;
 use App\Http\Controllers\Apps\RoleController;
@@ -36,4 +37,8 @@ Route::group(["middleware" => "auth"], function() {
     Route::resource("apps/users", UserController::class, ["as" => "apps"])
     ->except(["show"])
     ->middleware("permission:users.index|users.create|users.edit|users.delete");
+
+    Route::resource("/apps/categories", CategoryController::class, ["as" => "apps"])
+    ->except(["show"])
+    ->middleware('permission:categories.index|categories.create|categories.edit|categories.delete');
 });
